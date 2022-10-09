@@ -11,18 +11,25 @@ class FileReader:
 		Then invoke readData() and give as params left top and right bottom indexes of input matrix data (in this case is (0, 0) and (2, 2))
 		and left top and right bottom indexes of output matrix data (in this case is (3, 0) and (3, 2))
 	'''
-	def __init__(self, path : str, rows : int, columns : int, is_open=False):
+	def __init__(self, path : str, rows = 0, columns = 0):
 		'''
 		path - path to file, which keep you data
 		rows - count rows of matrix in file
 		columns - count columns of matrix in file
-		is_open - sets whether the default file will be opened
 		'''
-		self.openFile(path)
+		self.openFile(path, is_open)
 		self.setSize(rows, columns)
+		self.data = list(map(split, self.file.readlines().split('\n')))
 
-		if is_open:
-			self.file = open(self.path, 'r')
+		for row in self.data:
+			row = list(map(int, row))
+
+		self.rows = len(self.data)
+		if not self.rows:
+			self.columns = len(self.data[0])
+		else:
+			print('ErrorMatrix') #Replace on Except
+
 
 	def readData(self, startIn : tuple, endIn : tuple, startOut : tuple, endOut : tuple):
 		'''
@@ -41,7 +48,10 @@ class FileReader:
 		endIn - left bottom indexes of input matrix data
 		'''
 		inData = []
-		#TODO
+
+		for i in range(startIn[0], endIn[0] + 1):
+			inData.append(self.data[i][startIn[1]:endIn[1] + 1])
+
 		return inData
 
 	def readOutData(self, startOut : tuple, endOut : tuple):
@@ -50,18 +60,16 @@ class FileReader:
 		endOut - right bottom indexes of output matrix data
 		'''
 		outData = []
-		#TODO
+
+		for i in range(startOut[0], endOut[0] + 1):
+			outData.append(self.data[i][startOut[1]:endOut[1] + 1])
 		return outData
 
-	def openFile(self, path : str, isOpen=False):
+	def openFile(self, path : str):
 		'''
 		path - path to file, which keep you data
-		is_open - sets whether the default file will be opened
 		'''
 		self.pathToFile = path
-
-		if is_open:
-			self.file = open(self.path, 'r')
 
 	def setSize(self, rows : int, columns : int):
 		'''
@@ -70,3 +78,6 @@ class FileReader:
 		'''
 		self.rows = rows
 		self.columns = columns
+
+	def getData():
+		return self.data
