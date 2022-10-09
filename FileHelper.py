@@ -38,9 +38,8 @@ class FileReader:
 		startOut - left top indexes of output matrix data
 		endOut - right bottom indexes of output matrix data
 		'''
-		inData, outData = [], []
-		#TODO
-		return inData, outData
+		
+		return readInData(startIn, endIn), readOutData(startOut, endOut)
 
 	def readInData(self, startIn : tuple, endIn : tuple):
 		'''
